@@ -1,0 +1,15 @@
+.header {
+
+  /* Stick to the top */
+  background-color: initial;
+  position: sticky;
+  top: 0;
+
+  /* Displayed on top of other rows when scrolling */
+  z-index: 9999;
+}
+
+.table {
+  max-height: 50vh;
+  overflow-y: scroll;
+}
