@@ -1,7 +1,7 @@
 .header {
 
   /* Stick to the top */
-  background-color: initial;
+  background-color: black;
   position: sticky;
   top: 0;
 
@@ -10,6 +10,26 @@
 }
 
 .table {
-  max-height: 50vh;
+  max-height: 40vh;
   overflow-y: scroll;
+}
+
+hgroup {
+  text-align: center;
+}
+
+svg {
+  display: block;
+  width: 100%;
+  height: 70vh;
+}
+
+svg .country:hover {
+  stroke: white;
+  stroke-width: 1px;
+  cursor: pointer;
+}
+
+.grid h3 {
+  text-align: center;
 }

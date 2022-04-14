@@ -1,4 +1,7 @@
 import axios from "axios";
 export default axios.create({
-    baseURL: "https://api.covid19api.com/",
+    baseURL: "https://disease.sh/v3/covid-19/",
+    headers: {
+        "accept": "application/json"
+    }
 });
