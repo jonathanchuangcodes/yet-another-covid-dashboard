@@ -8,7 +8,6 @@ import mapData from "../GeoChart.world.geo.json";
 export default function App() {
   const [allData, setAllData] = useState(null);
   const [countriesData, setCountriesData] = useState(null);
-  const [country, setCountry] = useState(null);
 
   async function getAllData() {
     const { data } = await covid.get("all");
