@@ -10,7 +10,7 @@ export default function App() {
   const [countriesData, setCountriesData] = useState(null);
 
   async function getAllData() {
-    const { data } = await covid.get("all");
+    const { data } = await covid.get("all?yesterday=true&?allowNull=true");
     return setAllData(data);
   }
 
@@ -22,15 +22,11 @@ export default function App() {
   useEffect(() => {
     if (!allData) {
       getAllData();
-    } else if (Date.now() - allData.updated >= 86400000) {
-      getAllData();
     }
   }, [allData])
 
   useEffect(() => {
     if (!countriesData) {
-      getCountriesData();
-    } else if (Date.now() - countriesData[0].updated >= 86400000) {
       getCountriesData();
     }
   }, [countriesData])
@@ -50,8 +46,6 @@ export default function App() {
     return { ...mapData, features: theFeatures };
   }, [countriesData])
 
-  console.log(parsedData);
-
   if (allData && countriesData) {
     return (
       <div className="container-fluid">
@@ -62,40 +56,31 @@ export default function App() {
 
         <p>Another Coronavirus wave is here, with the BA.2 Omicron
           variant becoming the dominant strain in affected communities. Read more about it <a href="https://www.nytimes.com/2022/03/30/well/live/ba2-omicron-covid.html">here</a>.</p>
-        <h2>Today</h2>
-        <div className="grid">
-          <div>
-            <h3>{`${allData.todayCases.toLocaleString()} New Cases Today`}</h3>
+        <div className="general-statistics">
+          <h1>World Summary</h1>
+          <h2>Today</h2>
+          <div className="grid">
+            <div>
+              <h3>{`${allData.todayCases.toLocaleString()} new cases today`}</h3>
+            </div>
+            <div>
+              <h3>{`${allData.todayDeaths.toLocaleString()} deaths today`}</h3>
+            </div>
           </div>
-          <div>
-            <h3>{`${allData.todayDeaths.toLocaleString()} Deaths Today`}</h3>
+          <h2>Totals</h2>
+          <div className="grid">
+            <div>
+              <h3>{`${allData.active.toLocaleString()} cases remain active, with ${Math.round(allData.activePerOneMillion).toLocaleString()} active cases per million`}</h3>
+            </div>
           </div>
-        </div>
-        <h2>Totals</h2>
-        <div className="grid">
-          <div>
-            <h3>{`${allData.active.toLocaleString()} Active Cases Today`}</h3>
+          <div className="grid">
+            <h3><span className="red">{allData.critical.toLocaleString()}</span>{` people remain in critical condition`}</h3>
           </div>
-          <div>
-            <h3>{`${Math.round(allData.activePerOneMillion).toLocaleString()} Active Cases per Million`}</h3>
-          </div>
-        </div>
-        <div className="grid">
-          <h3>{`${allData.critical.toLocaleString()} People remain in Critical Condition`}</h3>
         </div>
 
         {countriesData ? <GeoChart data={parsedData} /> : ""}
-        {/* <label htmlFor="country-select">Choose a country:</label> */}
-        {/* <select id="country-select" onChange={(e) => setCountry(e.target.value)}>
-            <option value="">Please select a country</option>
-            {data ? data.Countries.map((country) => {
-              return <option key={country.ID} value={country.Slug}>{country.Country}</option>
-            }) : ""}
-          </select> */}
-
-        <div>
-        </div>
-        <div className="container table" aria-busy={countriesData}>
+        <h1>Cases, Deaths, and Recovered Cases by Country</h1>
+        <div className="container table">
           <table>
             <thead className="header">
               <tr>

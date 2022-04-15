@@ -1,3 +1,15 @@
 .label {
     color: white;
 }
+
+#tooltip {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: fit-content;
+    display: none;
+    border: solid 2px rgb(234, 234, 234);
+    border-radius: 8px;
+    background-color: black;
+    padding: 0.5rem;
+}

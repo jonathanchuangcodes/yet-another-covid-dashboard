@@ -1,3 +1,20 @@
+hgroup {
+  text-align: center;
+}
+
+svg {
+  display: block;
+  width: 100%;
+  height: 70vh;
+  overflow: hidden;
+}
+
+svg .country:hover {
+  stroke: white;
+  stroke-width: 1px;
+  cursor: pointer;
+}
+
 .header {
 
   /* Stick to the top */
@@ -9,27 +26,45 @@
   z-index: 9999;
 }
 
-.table {
-  max-height: 40vh;
-  overflow-y: scroll;
+.general-statistics {
+  border: 2px solid rgb(234, 234, 234);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 4rem;
+  margin-bottom: 2rem;
 }
 
-hgroup {
+.general-statistics h1 {
+  margin: 0;
   text-align: center;
-}
-
-svg {
-  display: block;
-  width: 100%;
-  height: 70vh;
-}
-
-svg .country:hover {
-  stroke: white;
-  stroke-width: 1px;
-  cursor: pointer;
 }
 
 .grid h3 {
   text-align: center;
+}
+
+.table {
+  margin-top: 4rem;
+  max-height: 50vh;
+  overflow-y: scroll;
+}
+
+.red {
+  color: rgb(194, 0, 0)
+}
+
+.svg-container {
+  border: 2px solid rgb(234, 234, 234);
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 0 0 1rem 0;
+}
+
+.chart {
+  margin-top: 4rem;
+}
+
+.chart h1 {
+  text-align: center;
+  margin-bottom: 1rem;
 }
