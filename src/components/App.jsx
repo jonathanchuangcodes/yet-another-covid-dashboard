@@ -2,11 +2,14 @@ import React, { useState, useEffect, useMemo } from "react"
 import covid from '../api/covid'
 import "../styles/App.css"
 import GeoChart from "./GeoChart";
+import GeoChartHistorical from "./GeoChartHistorical";
 import mapData from "../GeoChart.world.geo.json";
+import useHistoricalData from "../hooks/useHistoricalData";
 
 //TODO: Change any type definitions
 export default function App() {
   const [allData, setAllData] = useState(null);
+  const [historicalData, setHistoricalData] = useState(null);
   const [countriesData, setCountriesData] = useState(null);
 
   async function getAllData() {
@@ -17,6 +20,11 @@ export default function App() {
   async function getCountriesData() {
     const { data } = await covid.get("countries?allowNull=true");
     return setCountriesData(data);
+  }
+
+  async function getAllHistoricalData() {
+    const { data } = await covid.get("historical?lastdays=all");
+    return setHistoricalData(data);
   }
 
   useEffect(() => {
@@ -30,6 +38,12 @@ export default function App() {
       getCountriesData();
     }
   }, [countriesData])
+
+  useEffect(() => {
+    if (!historicalData) {
+      getAllHistoricalData();
+    }
+  }, [historicalData])
 
   const parsedData = useMemo(() => {
     const theFeatures = mapData.features.map((feature) => {
@@ -45,6 +59,8 @@ export default function App() {
     })
     return { ...mapData, features: theFeatures };
   }, [countriesData])
+
+  const parsedHistoricalData = useHistoricalData(historicalData, mapData);
 
   if (allData && countriesData) {
     return (
@@ -78,7 +94,8 @@ export default function App() {
           </div>
         </div>
 
-        {countriesData ? <GeoChart data={parsedData} /> : ""}
+        {countriesData ? <GeoChart data={parsedData} /> : null}
+        {historicalData ? <GeoChartHistorical data={parsedHistoricalData} /> : null}
         <h1>Cases, Deaths, and Recovered Cases by Country</h1>
         <div className="container table">
           <table>

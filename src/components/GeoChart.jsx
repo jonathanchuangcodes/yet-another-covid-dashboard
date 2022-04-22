@@ -87,18 +87,10 @@ export default function GeoChart({ data }) {
                         `${handleLabel()} in ${feature.properties.name}: 
                         ${feature.covidData && feature.covidData[selectedStat] ?
                             feature.covidData[selectedStat].toLocaleString() : "data currently unavailable"}`
-
                 }
-
             )
             .attr("x", 10)
             .attr("y", 25);
-
-        // .append("title")
-        // .datum((d) => d)
-        // .text((d) => `${d.properties.name}: ${d.covidData && d.covidData[selectedStat] ?
-        //     `${d.covidData[selectedStat].toLocaleString()} ${handleLabel()}` : "data currently unavailable"}`)
-
 
     }, [data, dimensions, selectedCountry, selectedStat])
 
