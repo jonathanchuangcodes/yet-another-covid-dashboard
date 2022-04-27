@@ -20,16 +20,9 @@
     top: 50%;
     left: 0;
     transform: translateY(-50%);
-    height: 4px;
+    height: 12px;
+    border-radius: 50px;
     width: 100%;
-}
-
-.scrubber.vertical .bar {
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 4px;
-    height: 100%;
 }
 
 .scrubber .bar__progress {
@@ -46,6 +39,7 @@
 .scrubber.horizontal .bar__marker,
 .scrubber.horizontal .bar__buffer {
     height: 100%;
+    border-radius: 50px;
 }
 
 .scrubber.vertical .bar__progress,
@@ -57,9 +51,9 @@
 
 .scrubber .bar__thumb {
     position: absolute;
-    width: 0px;
-    height: 0px;
-    border-radius: 10px;
+    width: 16px;
+    height: 16px;
+    border-radius: 20px;
     background: #019afd;
     transition: height 0.2s linear, width 0.2s linear;
 }
@@ -75,16 +69,15 @@
 }
 
 .scrubber.hover.horizontal .bar {
-    height: 6px;
+    height: 12px;
+    border-radius: 50px;
 }
 
-.scrubber.hover.vertical .bar {
-    width: 6px;
-}
 
 .scrubber.hover .bar__thumb {
-    width: 12px;
-    height: 12px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50px;
 }
 
 .scrubber .bar__marker {

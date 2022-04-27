@@ -7,11 +7,11 @@ import "../styles/scrubber.css"
 
 export default function GeoChartHistorical({ data }) {
     const [selectedType, setSelectedType] = useState("cases");
-    const [play, setPlay] = useState(false);
 
-    const markers = Object.keys(data.features[0].timeline.cases).map((date) => {
-        return Date.parse(date);
-    })
+    // const markers = Object.keys(data.features[0].timeline.cases).map((date) => {
+    //     return Date.parse(date);
+    // })
+
     const minDate = useMemo(() => {
         const days = min(data.features.map((feature) => {
             return feature.timeline ? Object.keys(feature.timeline[selectedType]).map((day) => {
@@ -40,20 +40,6 @@ export default function GeoChartHistorical({ data }) {
     const svgRef = useRef();
     const wrapperRef = useRef();
     const dimensions = useResizeObserver(wrapperRef);
-
-    const handleOnClick = () => {
-        setPlay(true);
-        let index = markers.findIndex((theDate) => date === theDate);
-        index = index === -1 ? 0 : index;
-
-        if (play) {
-            setTimeout(setDate(index + 1), 100)
-        }
-    }
-
-    const handleStop = () => {
-        setPlay(false)
-    }
 
     const handleScrubStart = (value) => {
         setDate(Math.round(value))
@@ -86,6 +72,7 @@ export default function GeoChartHistorical({ data }) {
         return max(maxStatsArray);
     }, [data.features, selectedType, dateString])
 
+    //Creates the bubble representing the chosen info type.
     function centroid(country) {
         const path = geoPath();
         return path.centroid(country);
@@ -159,16 +146,6 @@ export default function GeoChartHistorical({ data }) {
             <div ref={wrapperRef} className="svg-container">
                 <svg ref={svgRef}></svg>
             </div>
-            <button onClick={handleOnClick}>Play</button>
-            <button onClick={handleStop}>Stop</button>
-
-            <select name="stat" id="stat-select" onClick={(e) => {
-                setSelectedType(e.target.value);
-            }}>
-                <option value={"cases"}>Cases</option>
-                <option value={"deaths"}>Deaths</option>
-                <option value={"recovered"}>Recoveries</option>
-            </select>
             <Scrubber
                 max={maxDate}
                 min={minDate}
@@ -177,7 +154,14 @@ export default function GeoChartHistorical({ data }) {
                 onScrubEnd={handleScrubEnd}
                 onScrubChange={handleScrubChange}
             />
-            <p>{`${dateString}`}</p>
+            <p>{`Date: ${dateString}`}</p>
+            <select name="stat" id="stat-select" onClick={(e) => {
+                setSelectedType(e.target.value);
+            }}>
+                <option value={"cases"}>Cases</option>
+                <option value={"deaths"}>Deaths</option>
+                <option value={"recovered"}>Recoveries</option>
+            </select>
         </div>
     )
 
