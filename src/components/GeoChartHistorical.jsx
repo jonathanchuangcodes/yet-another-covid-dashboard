@@ -1,5 +1,6 @@
 import { useRef, useCallback, useEffect, useState, useMemo } from "react";
-import { select, geoPath, geoMercator, map, max, min, range, scaleSqrt, descending } from "d3";
+import { select, geoPath, geoMercator, map, max, min, range, scaleSqrt, descending, easeLinear } from "d3";
+import _ from "lodash";
 import { Scrubber } from "react-scrubber";
 import useResizeObserver from "../hooks/useResizeObserver";
 import "../styles/GeoChartHistorical.css"
@@ -7,10 +8,6 @@ import "../styles/scrubber.css"
 
 export default function GeoChartHistorical({ data }) {
     const [selectedType, setSelectedType] = useState("cases");
-
-    // const markers = Object.keys(data.features[0].timeline.cases).map((date) => {
-    //     return Date.parse(date);
-    // })
 
     const minDate = useMemo(() => {
         const days = min(data.features.map((feature) => {
@@ -29,6 +26,7 @@ export default function GeoChartHistorical({ data }) {
         }))
         return max(days);
     }, [data, selectedType])
+
     const [date, setDate] = useState(minDate);
 
     const dateString = useMemo(() => {
@@ -69,7 +67,7 @@ export default function GeoChartHistorical({ data }) {
         const maxStatsArray = data.features.map((feature) => {
             return feature.timeline ? feature.timeline[selectedType][dateString] : null;
         })
-        return max(maxStatsArray);
+        return max(_.without(maxStatsArray, null));
     }, [data.features, selectedType, dateString])
 
     //Creates the bubble representing the chosen info type.
@@ -135,8 +133,7 @@ export default function GeoChartHistorical({ data }) {
             })
             .call(T ? circle => circle.append("title").text(i => `${T[i]}: ${V[i].toLocaleString()} ${selectedType}`) : () => { });
 
-    }, [selectedType, date, data, dimensions, maxStats, dateString, handleColor, P, T, V, radius])
-
+    }, [data, dimensions, maxStats, P, T, V, radius, handleColor, selectedType])
 
 
 

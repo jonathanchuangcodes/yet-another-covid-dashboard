@@ -13,12 +13,12 @@ export default function App() {
   const [countriesData, setCountriesData] = useState(null);
 
   async function getAllData() {
-    const { data } = await covid.get("all?yesterday=true&?allowNull=true");
+    const { data } = await covid.get("all?allowNull=true");
     return setAllData(data);
   }
 
   async function getCountriesData() {
-    const { data } = await covid.get("countries?allowNull=true");
+    const { data } = await covid.get("countries?allowNull=true&?yesterday=true");
     return setCountriesData(data);
   }
 
